@@ -3,17 +3,20 @@ package net.slipp.member.web;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import net.slipp.member.service.Member;
+import net.slipp.member.domain.Member;
+import net.slipp.member.domain.MemberRepository;
 
 @Controller
 public class MemberController {
 	
-	private List<Member> members = new ArrayList<Member>();
+	@Autowired
+	private MemberRepository memberRepository;
 	
 	@RequestMapping(value="/member/join", method=RequestMethod.GET)
 	public String joinGet(Model model) {
@@ -23,16 +26,13 @@ public class MemberController {
 	@RequestMapping(value="/member/join", method=RequestMethod.POST)
 	public String joinPost(Model model, Member member) {
 		System.out.println("member : " + member);
-		members.add(member);
+		memberRepository.save(member);
 		return "redirect:/member/list";
 	}
 	
 	@RequestMapping(value="/member/list", method=RequestMethod.GET)
 	public String listGet(Model model) {
-		for (Member member : members) {
-			System.out.println(member);
-		}
-		model.addAttribute("members", members);
+		model.addAttribute("members", memberRepository.findAll());
 		return "member/list";
 	}
 }

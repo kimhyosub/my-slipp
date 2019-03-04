@@ -1,8 +1,20 @@
-package net.slipp.member.service;
+package net.slipp.member.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Member {
 	
+	@Id
+	@GeneratedValue
+	private Long id;
+	
+	@Column(nullable=false, length=20)
 	private String memberId;
+	
 	private String memberPassword;
 	private String memberName;
 
