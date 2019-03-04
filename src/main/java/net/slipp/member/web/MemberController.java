@@ -17,7 +17,7 @@ public class MemberController {
 	
 	@RequestMapping(value="/member/join", method=RequestMethod.GET)
 	public String joinGet(Model model) {
-		return "/member/join";
+		return "member/join";
 	}
 	
 	@RequestMapping(value="/member/join", method=RequestMethod.POST)
@@ -33,6 +33,6 @@ public class MemberController {
 			System.out.println(member);
 		}
 		model.addAttribute("members", members);
-		return "/member/list";
+		return "member/list";
 	}
 }
