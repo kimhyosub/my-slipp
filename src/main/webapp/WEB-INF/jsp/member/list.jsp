@@ -13,7 +13,7 @@
 		<a class="navbar-brand" href="#">SLIPP</a>
 		<div class="collapse navbar-collapse " id="navbarSupportedContent">
 			<ul class="navbar-nav mr-0 my-2 my-lg-0">
-				<li class="btn btn-outline-success"><a href="/member/join">회원가입</a>
+				<li class="btn btn-outline-success"><a href="/member/form">회원가입</a>
 				</li>
 			</ul>
 		</div>
@@ -27,6 +27,7 @@
 					<th scope="col">Id</th>
 					<th scope="col">비밀번호</th>
 					<th scope="col">이름</th>
+					<th scope="col">수정</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -36,6 +37,7 @@
                     <td>${member.memberId }</td>
                     <td>${member.memberPassword }</td>
                     <td>${member.memberName }</td>
+                    <td><a href="/member/${member.id }/form" class="btn btn-primary">수정</a></td>
                 </tr>
                 </c:forEach>					
 			</tbody>
