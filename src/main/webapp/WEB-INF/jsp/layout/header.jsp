@@ -10,11 +10,21 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">SLIPP</a>
+        <a class="navbar-brand" href="#">CMS</a>
         <div class="collapse navbar-collapse " id="navbarSupportedContent">
-            <ul class="navbar-nav mr-0 my-2 my-lg-0">
-                <li class="btn btn-outline-success"><a href="/member/form">회원가입</a>
-                </li>
+            <ul class="navbar-nav mr-0 my-2 my-lg-0 navbar-right">
+                <li class="btn btn-outline-success"><a href="">Posts</a></li>
+                <c:choose>
+                    <c:when test="${member eq null}">
+	                    <li class="btn btn-outline-success"><a href="/login/form">로그인</a></li>
+	                    <li class="btn btn-outline-success"><a href="/member/form">회원가입</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="btn btn-outline-success"><a href="/logout">로그아웃</a></li>
+                        <li class="btn btn-outline-success"><a href="/member/form">개인정보수정</a></li>
+                    </c:otherwise>
+                </c:choose>
+                
             </ul>
         </div>
     </nav>

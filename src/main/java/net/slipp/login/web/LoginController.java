@@ -12,18 +12,17 @@ import net.slipp.member.domain.Member;
 import net.slipp.member.domain.MemberRepository;
 
 @Controller
-@RequestMapping("/login")
 public class LoginController {
 	
 	@Autowired
 	MemberRepository memberRepository;
 	
-	@GetMapping("/form")
+	@GetMapping("/login/form")
 	public String form() {
 		return "/login/form";
 	}
 	
-	@PostMapping("")
+	@PostMapping("/login")
 	public String login(String memberId, String memberPassword, HttpSession session) {
 		Member member = memberRepository.findByMemberId(memberId);
 		if(member == null) {
@@ -41,5 +40,12 @@ public class LoginController {
 		session.setAttribute("member", member);
 		return "redirect:/";
 	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("member");
+		return "redirect:/";
+	}
+	
 	
 }
