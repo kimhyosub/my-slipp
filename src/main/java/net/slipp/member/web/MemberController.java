@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import net.slipp.common.util.HttpSessionUtil;
 import net.slipp.member.domain.Member;
 import net.slipp.member.domain.MemberRepository;
 
@@ -27,13 +28,12 @@ public class MemberController {
 	
 	@GetMapping("/{id}/form")
 	public String updateForm(Model model, @PathVariable Long id, HttpSession session) {
-		Object tempMember = session.getAttribute("sessionedMember");
-		if(tempMember == null) {
+		if(HttpSessionUtil.isLoginMember(session)) {
 			return "redirect:/login/form";
 		}
 		
-		Member sessionedMember = (Member)tempMember;
-		if(!id.equals(sessionedMember.getId())) {
+		Member sessionedMember = HttpSessionUtil.getMemberFromSession(session);
+		if(!sessionedMember.matchId(id)) {
 			throw new IllegalStateException("You can't update the anther Member");
 		}
 		
@@ -45,13 +45,12 @@ public class MemberController {
 	
 	@PostMapping("/form")
 	public String update(Model model, Member member, HttpSession session) {
-		Object tempMember = session.getAttribute("sessionedMember");
-		if(tempMember == null) {
+		if(HttpSessionUtil.isLoginMember(session)) {
 			return "redirect:/login/form";
 		}
 		
-		Member sessionedMember = (Member)tempMember;
-		if(!member.getId().equals(sessionedMember.getId())) {
+		Member sessionedMember = HttpSessionUtil.getMemberFromSession(session);
+		if(!sessionedMember.matchId(member.getId())) {
 			throw new IllegalStateException("You can't update the anther Member");
 		}
 		

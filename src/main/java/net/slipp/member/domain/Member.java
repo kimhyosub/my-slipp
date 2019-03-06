@@ -21,6 +21,13 @@ public class Member {
 	public Long getId() {
 		return id;
 	}
+	
+	public boolean matchId(Long newId) {
+		if(newId == null) {
+			return false;
+		}
+		return newId.equals(id);
+	}
 
 	public void setId(Long id) {
 		this.id = id;
@@ -32,6 +39,13 @@ public class Member {
 
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
+	}
+	
+	public boolean matchPassword(String newPassword) {
+		if(newPassword == null) {
+			return false;
+		}
+		return newPassword.equals(memberPassword);
 	}
 
 	public String getMemberPassword() {
