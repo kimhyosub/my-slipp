@@ -1,5 +1,7 @@
 package net.slipp.member.web;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +26,17 @@ public class MemberController {
 	}
 	
 	@GetMapping("/{id}/form")
-	public String updateForm(Model model, @PathVariable Long id) {
+	public String updateForm(Model model, @PathVariable Long id, HttpSession session) {
+		Object tempMember = session.getAttribute("sessionedMember");
+		if(tempMember == null) {
+			return "redirect:/login/form";
+		}
+		
+		Member sessionedMember = (Member)tempMember;
+		if(!id.equals(sessionedMember.getId())) {
+			throw new IllegalStateException("You can't update the anther Member");
+		}
+		
 		Member member = memberRepository.getOne(id);
 		model.addAttribute("isUpdate", true);
 		model.addAttribute("member", member);
@@ -32,7 +44,17 @@ public class MemberController {
 	}
 	
 	@PostMapping("/form")
-	public String update(Model model, Member member) {
+	public String update(Model model, Member member, HttpSession session) {
+		Object tempMember = session.getAttribute("sessionedMember");
+		if(tempMember == null) {
+			return "redirect:/login/form";
+		}
+		
+		Member sessionedMember = (Member)tempMember;
+		if(!member.getId().equals(sessionedMember.getId())) {
+			throw new IllegalStateException("You can't update the anther Member");
+		}
+		
 		memberRepository.save(member);
 		return "redirect:/member/list";
 	}

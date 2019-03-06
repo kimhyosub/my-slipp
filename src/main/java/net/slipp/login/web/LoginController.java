@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import net.slipp.member.domain.Member;
 import net.slipp.member.domain.MemberRepository;
@@ -37,13 +36,13 @@ public class LoginController {
 		
 		System.out.println("Login Success!");
 				
-		session.setAttribute("member", member);
+		session.setAttribute("sessionedMember", member);
 		return "redirect:/";
 	}
 	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-		session.removeAttribute("member");
+		session.removeAttribute("sessionedMember");
 		return "redirect:/";
 	}
 	
