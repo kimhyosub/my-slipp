@@ -1,0 +1,45 @@
+package net.slipp.login.web;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import net.slipp.member.domain.Member;
+import net.slipp.member.domain.MemberRepository;
+
+@Controller
+@RequestMapping("/login")
+public class LoginController {
+	
+	@Autowired
+	MemberRepository memberRepository;
+	
+	@GetMapping("/form")
+	public String form() {
+		return "/login/form";
+	}
+	
+	@PostMapping("")
+	public String login(String memberId, String memberPassword, HttpSession session) {
+		Member member = memberRepository.findByMemberId(memberId);
+		if(member == null) {
+			System.out.println("Login Failure!");
+			return "redirect:/login/form";
+		}
+		
+		if(!memberPassword.equals(member.getMemberPassword())) {
+			System.out.println("Login Failure!");
+			return "redirect:/login/form";
+		}
+		
+		System.out.println("Login Success!");
+				
+		session.setAttribute("member", member);
+		return "redirect:/";
+	}
+	
+}
