@@ -15,6 +15,7 @@ public class MainController {
 	
 	@RequestMapping("/")
 	public String index(Model model){
+		
 		model.addAttribute("questions", questionRepository.findAll());
 		return "index";
 	}
