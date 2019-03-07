@@ -4,18 +4,27 @@ spring:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
   datasource:
-      url: jdbc:log4jdbc:mariadb://localhost:3306/cloudbridge
-      username: cloudbridge
-      password: Rlagytjq!2
+      #url: jdbc:log4jdbc:mariadb://localhost:3306/cloudbridge
+      url: jdbc:h2:~/my-slipp
+      #username: cloudbridge
+      username: sa
+      password: 
       validation-query: SELECT 1
-      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      #driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      driver-class-name: org.h2.Driver
   jpa:
     hibernate: 
       ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    #database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: org.hibernate.dialect.H2Dialect
     generate-ddl: true
     show-sql: true
     properties:
       hibernate:
         format_sql: true
     database: mysql
+    
+  h2:
+    console:
+      enable: true
+      path: /h2
