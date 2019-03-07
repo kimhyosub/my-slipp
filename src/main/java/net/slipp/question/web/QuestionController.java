@@ -35,7 +35,7 @@ public class QuestionController {
 		}
 		
 		Member sessionedMember = HttpSessionUtil.getMemberFromSession(session);
-		Question question = new Question(sessionedMember.getMemberId(), title, contents);
+		Question question = new Question(sessionedMember, title, contents);
 		
 		questionRepository.save(question);
 		return "redirect:/";

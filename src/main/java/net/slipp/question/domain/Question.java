@@ -1,8 +1,13 @@
 package net.slipp.question.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import net.slipp.member.domain.Member;
 
 @Entity
 public class Question {
@@ -10,14 +15,17 @@ public class Question {
 	@GeneratedValue
 	private Long id;
 	
-	private String writer;
+	@ManyToOne
+	@JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
+	private Member writer;
+	
 	private String title;
 	private String contents;
 	
 	public Question() {
 	}
 	
-	public Question(String writer, String title, String contents) {
+	public Question(Member writer, String title, String contents) {
 		super();
 		this.writer = writer;
 		this.title = title;
@@ -32,11 +40,11 @@ public class Question {
 		this.id = id;
 	}
 
-	public String getWriter() {
+	public Member getWriter() {
 		return writer;
 	}
 
-	public void setWriter(String writer) {
+	public void setWriter(Member writer) {
 		this.writer = writer;
 	}
 
@@ -60,6 +68,4 @@ public class Question {
 	public String toString() {
 		return "Question [id=" + id + ", writer=" + writer + ", title=" + title + ", contents=" + contents + "]";
 	}
-	
-	
 }
