@@ -1,5 +1,8 @@
 package net.slipp.question.domain;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -14,23 +17,32 @@ public class Question {
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
 	private Member writer;
-	
+
 	private String title;
 	private String contents;
-	
-	public Question() {
-	}
-	
+
+	public Question() {}
+
 	public Question(Member writer, String title, String contents) {
 		super();
 		this.writer = writer;
 		this.title = title;
 		this.contents = contents;
+		this.createDate = LocalDateTime.now();
 	}
+	
+	public String getFormattedCreateDate() {
+		if(createDate == null) {
+			return "";
+		}
+		return createDate.format(DateTimeFormatter.ofPattern("yyyy.mm.dd HH:mm:ss"));
+	}
+
+	private LocalDateTime createDate;
 
 	public Long getId() {
 		return id;
@@ -62,6 +74,14 @@ public class Question {
 
 	public void setContents(String contents) {
 		this.contents = contents;
+	}
+
+	public LocalDateTime getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
 	}
 
 	@Override

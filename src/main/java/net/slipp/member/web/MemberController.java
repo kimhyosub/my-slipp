@@ -45,14 +45,13 @@ public class MemberController {
 	
 	@PostMapping("/form")
 	public String update(Model model, Member member, HttpSession session) {
-		if(HttpSessionUtil.isLoginMember(session)) {
-			return "redirect:/login/form";
-		}
-		
-		Member sessionedMember = HttpSessionUtil.getMemberFromSession(session);
-		if(!sessionedMember.matchId(member.getId())) {
-			throw new IllegalStateException("You can't update the anther Member");
-		}
+		/*
+		 * if(HttpSessionUtil.isLoginMember(session)) { return "redirect:/login/form"; }
+		 * 
+		 * Member sessionedMember = HttpSessionUtil.getMemberFromSession(session);
+		 * if(!sessionedMember.matchId(member.getId())) { throw new
+		 * IllegalStateException("You can't update the anther Member"); }
+		 */
 		
 		memberRepository.save(member);
 		return "redirect:/member/list";
