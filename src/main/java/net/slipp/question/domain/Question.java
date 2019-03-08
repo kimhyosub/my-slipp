@@ -88,4 +88,10 @@ public class Question {
 	public String toString() {
 		return "Question [id=" + id + ", writer=" + writer + ", title=" + title + ", contents=" + contents + "]";
 	}
+
+	public void update(String newTitle, String newContents) {
+		this.title = newTitle;
+		this.contents = newContents;
+		
+	}
 }

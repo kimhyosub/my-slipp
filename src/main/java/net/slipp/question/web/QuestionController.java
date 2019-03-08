@@ -5,9 +5,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import net.slipp.common.util.HttpSessionUtil;
@@ -47,5 +49,25 @@ public class QuestionController {
 	public String show(Model model, @PathVariable Long id) {
 		model.addAttribute("question", questionRepository.getOne(id)) ;
 		return "/qna/show";
+	}
+	
+	@GetMapping("/{id}/form")
+	public String updateForm(Model model, @PathVariable Long id) {
+		model.addAttribute("question", questionRepository.getOne(id));
+		return"/qna/updateForm";
+	}
+	
+	@PutMapping("/{id}")
+	public String update(@PathVariable Long id, String title, String contents) {
+		Question question = questionRepository.getOne(id);
+		question.update(title, contents);
+		questionRepository.save(question);
+		return String.format("redirect:/question/%d", id);
+	}
+	
+	@DeleteMapping("/{id}")
+	public String delete(@PathVariable Long id) {
+		questionRepository.deleteById(id);
+		return "redirect:/";
 	}
 }

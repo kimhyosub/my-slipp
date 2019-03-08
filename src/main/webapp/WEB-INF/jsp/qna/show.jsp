@@ -8,14 +8,18 @@
     
     <div class="form-group">
         <label for="title">제목</label> 
-        ${question.title }" 
+        ${question.title }
     </div>
     <div class="form-group">
         <label for="contents">내용</label> 
         ${question.contents }
     </div>
     <a class="btn btn-primary" href="/question/${question.id }/form">수정</a>
-    <a class="btn btn-primary" href="/question/${question.id }/form">삭제</a>
+    <form action="/question/${question.id }" method="post">
+        <input type="hidden" name="_method" value="DELETE"/>
+        <button class="btn btn-primary" >삭제</button>
+    </form>
+    
     <a class="btn btn-primary" href="/">목록</a>
     
 </div>
