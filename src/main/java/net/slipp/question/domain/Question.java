@@ -24,7 +24,8 @@ public class Question {
 
 	private String title;
 	private String contents;
-
+	private LocalDateTime createDate;
+	
 	public Question() {}
 
 	public Question(Member writer, String title, String contents) {
@@ -41,8 +42,10 @@ public class Question {
 		}
 		return createDate.format(DateTimeFormatter.ofPattern("yyyy.mm.dd HH:mm:ss"));
 	}
-
-	private LocalDateTime createDate;
+	
+	public boolean isSameWriter(Member loginMember) {
+		return this.writer.equals(loginMember);
+	}
 
 	public Long getId() {
 		return id;
@@ -94,4 +97,5 @@ public class Question {
 		this.contents = newContents;
 		
 	}
+
 }
