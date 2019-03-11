@@ -4,6 +4,9 @@
 
 <div class="container">
 	<h1>로그인</h1>
+	<c:if test="${!empty errorMessage}">
+	   <div class="alert alert-danger" role="alert">${errorMessage}</div>
+	</c:if>
 	<form action="/login" method="post">
 		<div class="form-group">
 			<label for="memberId">사용자 아이디</label> 
