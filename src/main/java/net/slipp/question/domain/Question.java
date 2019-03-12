@@ -9,10 +9,12 @@ import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -25,23 +27,26 @@ import net.slipp.member.domain.Member;
 public class Question {
 	@Id
 	@GeneratedValue
-	
+	@JsonProperty
 	private Long id;
 
 	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
+	@JsonProperty
 	private Member writer;
 
 	@JsonProperty
 	private String title;
+	
+	@Lob
 	@JsonProperty
 	private String contents;
 	
 	private LocalDateTime createDate;
 	
-	@OneToMany(mappedBy="question")
+	@OneToMany(mappedBy = "question")
 	@OrderBy("id DESC")
-	@JsonManagedReference
+	@JsonBackReference
 	private List<Answer> answers;
 	
 	public Question() {}
@@ -51,7 +56,11 @@ public class Question {
 		this.writer = writer;
 		this.title = title;
 		this.contents = contents;
-		this.createDate = LocalDateTime.now();
+	}
+	
+	public void update(String newTitle, String newContents) {
+		this.title = newTitle;
+		this.contents = newContents;
 	}
 	
 	public String getFormattedCreateDate() {
@@ -64,7 +73,12 @@ public class Question {
 	public boolean isSameWriter(Member loginMember) {
 		return this.writer.equals(loginMember);
 	}
-
+	
+	@Override
+	public String toString() {
+		return "Question [id=" + id + ", writer=" + writer + ", title=" + title + ", contents=" + contents + "]";
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -103,17 +117,6 @@ public class Question {
 
 	public void setCreateDate(LocalDateTime createDate) {
 		this.createDate = createDate;
-	}
-
-	@Override
-	public String toString() {
-		return "Question [id=" + id + ", writer=" + writer + ", title=" + title + ", contents=" + contents + "]";
-	}
-
-	public void update(String newTitle, String newContents) {
-		this.title = newTitle;
-		this.contents = newContents;
-		
 	}
 
 	public List<Answer> getAnswers() {

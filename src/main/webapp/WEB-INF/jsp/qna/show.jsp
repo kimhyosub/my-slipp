@@ -68,7 +68,7 @@
 	                                        <a class="link-modify-article" href="/question/${question.id }/answers/${answer.id }/form">수정</a>
 	                                    </li>
 	                                    <li>
-	                                        <a class="link-delete-article" href="/question/${question.id }/answers/${answer.id }/form">삭제</a>
+	                                        <a class="link-delete-article" href="/api/question/${question.id }/answers/${answer.id }">삭제</a>
 	                                    </li>
 	                                </ul>
 	                            </div>
@@ -105,10 +105,10 @@
         <div class="article-util">
         <ul class="article-util-list">
             <li>
-                <a class="link-modify-article" href="/api/question/updateAnswer/{3}">수정</a>
+                <a class="link-modify-article" href="/api/question/{3}update/{4}/form">수정</a>
             </li>
             <li>
-                <a class="link-delete-article" href="/api/qna/deleteAnswer/{4}">삭제</a>
+                <a class="link-delete-article" href="/api/question/{3}/delete/{4}">삭제</a>
             </li>
         </ul>
         </div>

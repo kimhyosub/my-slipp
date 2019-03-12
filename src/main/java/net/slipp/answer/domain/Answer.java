@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import net.slipp.member.domain.Member;
@@ -34,7 +35,7 @@ public class Answer {
 	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
 	@JsonProperty
-	@JsonBackReference
+	@JsonManagedReference
 	private Question question;
 	
 	@Lob
@@ -58,6 +59,11 @@ public class Answer {
 		}
 		return createDate.format(DateTimeFormatter.ofPattern("yyyy.mm.dd HH:mm:ss"));
 	}
+	
+	public boolean isSameWriter(Member loginMember) {
+		return loginMember.equals(this.writer);
+	}
+
 	
 	public String getContents() {
 		return contents;
@@ -97,4 +103,5 @@ public class Answer {
 	public void setCreateDate(LocalDateTime createDate) {
 		this.createDate = createDate;
 	}
+
 }
