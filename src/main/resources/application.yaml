@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: set2 # 기본 환경 선택
+    active: set1 # 기본 환경 선택
 
 ---
 spring:

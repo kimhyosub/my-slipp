@@ -5,17 +5,27 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Member {
 	
 	@Id
 	@GeneratedValue
+	@JsonProperty
 	private Long id;
 	
 	@Column(nullable=false, length=20)
+	@JsonProperty
 	private String memberId;
 	
+	@JsonIgnore
 	private String memberPassword;
+	
+	@JsonProperty
 	private String memberName;
 	
 	public Long getId() {
