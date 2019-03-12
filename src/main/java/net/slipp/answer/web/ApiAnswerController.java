@@ -36,8 +36,8 @@ public class ApiAnswerController {
 		Member loginMember = HttpSessionUtil.getMemberFromSession(session);
 		Question question = questionRepository.getOne(questionId);
 		Answer answer = new Answer(loginMember, question, contents);
+		question.addAnswer();
 		return answerRepository.save(answer);
-		
 	}
 	
 	@DeleteMapping("{id}")
@@ -53,6 +53,10 @@ public class ApiAnswerController {
 		}
 		
 		answerRepository.deleteById(id);
+		
+		Question question = questionRepository.getOne(questionId);
+		question.deleteAnswer();
+		questionRepository.save(question);
 		return Result.ok();
 	}
 	

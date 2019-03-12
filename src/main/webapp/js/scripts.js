@@ -31,7 +31,6 @@ function onSuccess(data, status) {
 	$(".answer-write textarea").val('');
 }
 
-
 String.prototype.format = function() {
 	var args = arguments;
 	return this.replace(/{(\d+)}/g, function(match, number) {

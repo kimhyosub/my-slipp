@@ -16,16 +16,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import net.slipp.common.domain.AbstractEntity;
 import net.slipp.member.domain.Member;
 import net.slipp.question.domain.Question;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Answer {
-	@Id
-	@GeneratedValue
-	@JsonProperty
-	private Long id;
+public class Answer extends AbstractEntity{
 	
 	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
@@ -53,31 +50,15 @@ public class Answer {
 		this.createDate = LocalDateTime.now();
 	}
 	
-	public String getFormattedCreateDate() {
-		if(createDate == null) {
-			return "";
-		}
-		return createDate.format(DateTimeFormatter.ofPattern("yyyy.mm.dd HH:mm:ss"));
-	}
-	
 	public boolean isSameWriter(Member loginMember) {
 		return loginMember.equals(this.writer);
 	}
-
 	
 	public String getContents() {
 		return contents;
 	}
 	public void setContents(String contents) {
 		this.contents = contents;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public Member getWriter() {
@@ -102,6 +83,11 @@ public class Answer {
 
 	public void setCreateDate(LocalDateTime createDate) {
 		this.createDate = createDate;
+	}
+
+	@Override
+	public String toString() {
+		return "Answer [" + super.toString() + "writer=" + writer + ", question=" + question + ", contents=" + contents + ", createDate=" + createDate + "]";
 	}
 
 }

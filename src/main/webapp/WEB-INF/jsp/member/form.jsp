@@ -5,7 +5,7 @@
 <div class="container">
 	<h1><c:choose ><c:when test="${isUpdate}">회원수정</c:when><c:otherwise>회원가입</c:otherwise></c:choose></h1>
 	<form action="/member/form" method="post">
-	    <input type="hidden" id="id" name="id" value="${member.id }"/>
+	    <c:if test="${isUpdate}"><input type="hidden" id="id" name="id" value="${member.id }"/></c:if>
 		<div class="form-group">
 			<label for="memberId">사용자 아이디</label> 
 			<input type="text" class="form-control" name="memberId" id="memberId" placeholder="memberId" value="${member.memberId }"> 

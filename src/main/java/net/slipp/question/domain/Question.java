@@ -20,16 +20,12 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import net.slipp.answer.domain.Answer;
+import net.slipp.common.domain.AbstractEntity;
 import net.slipp.member.domain.Member;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Question {
-	@Id
-	@GeneratedValue
-	@JsonProperty
-	private Long id;
-
+public class Question extends AbstractEntity {
 	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
 	@JsonProperty
@@ -41,6 +37,9 @@ public class Question {
 	@Lob
 	@JsonProperty
 	private String contents;
+	
+	@JsonProperty
+	private Integer countOfAnswer = 0;
 	
 	private LocalDateTime createDate;
 	
@@ -63,30 +62,18 @@ public class Question {
 		this.contents = newContents;
 	}
 	
-	public String getFormattedCreateDate() {
-		if(createDate == null) {
-			return "";
-		}
-		return createDate.format(DateTimeFormatter.ofPattern("yyyy.mm.dd HH:mm:ss"));
-	}
-	
 	public boolean isSameWriter(Member loginMember) {
 		return this.writer.equals(loginMember);
 	}
 	
-	@Override
-	public String toString() {
-		return "Question [id=" + id + ", writer=" + writer + ", title=" + title + ", contents=" + contents + "]";
+	public void addAnswer() {
+		this.countOfAnswer += 1;
 	}
 	
-	public Long getId() {
-		return id;
+	public void deleteAnswer() {
+		this.countOfAnswer -= 1;
 	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+	
 	public Member getWriter() {
 		return writer;
 	}
@@ -125,5 +112,18 @@ public class Question {
 
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
+	}
+
+	public Integer getCountOfAnswer() {
+		return countOfAnswer;
+	}
+
+	public void setCountOfAnswer(Integer countOfAnswer) {
+		this.countOfAnswer = countOfAnswer;
+	}
+	
+	@Override
+	public String toString() {
+		return "Question [" + super.toString() + ", writer=" + writer + ", title=" + title + ", contents=" + contents + "]";
 	}
 }

@@ -9,14 +9,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import net.slipp.common.domain.AbstractEntity;
+
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Member {
-	
-	@Id
-	@GeneratedValue
-	@JsonProperty
-	private Long id;
+public class Member extends AbstractEntity {
 	
 	@Column(nullable=false, length=20)
 	@JsonProperty
@@ -28,27 +25,11 @@ public class Member {
 	@JsonProperty
 	private String memberName;
 	
-	public Long getId() {
-		return id;
-	}
-	
 	public boolean matchId(Long newId) {
 		if(newId == null) {
 			return false;
 		}
-		return newId.equals(id);
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getMemberId() {
-		return memberId;
-	}
-
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
+		return newId.equals(getId());
 	}
 	
 	public boolean matchPassword(String newPassword) {
@@ -56,6 +37,14 @@ public class Member {
 			return false;
 		}
 		return newPassword.equals(memberPassword);
+	}
+	
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 
 	public String getMemberPassword() {
@@ -76,32 +65,7 @@ public class Member {
 
 	@Override
 	public String toString() {
-		return "Member [memberId=" + memberId + ", memberPassword=" + memberPassword + ", memberName=" + memberName
+		return "Member [" + super.toString() + "memberId=" + memberId + ", memberPassword=" + memberPassword + ", memberName=" + memberName
 				+ "]";
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Member other = (Member) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
 	}
 }
