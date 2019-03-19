@@ -28,7 +28,7 @@
     </table>
     <div>
         <a class="btn btn-primary" href="/question/form">글쓰기</a>
-    </div>ㄴ
+    </div>
 </div>
 
 <c:import url="/WEB-INF/jsp/layout/footer.jsp" charEncoding="UTF-8" />
