@@ -27,7 +27,7 @@
         </tbody>
     </table>
     <div>
-        <a class="btn btn-primary" href="/question/form">글쓰기</a>
+        <a class="btn btn-primary" href="/question/form">글쓰기1</a>
     </div>
 </div>
 
